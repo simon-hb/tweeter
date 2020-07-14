@@ -1,0 +1,30 @@
+/* start with . since new-tweet is class name */
+.new-tweet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  min-width: 100%;
+}
+
+/* no . since this is name of tag */
+.new-tweet textarea {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 4px solid black;
+  width: 100%;
+  background-color: #f4f1ec;
+}
+/* can't add font-family to div unless we add class but insturcitons say don't modify html. could change div to footer as well */
+button {
+  font-family: "Bungee", sans-serif;
+  background-color: #4056a1;
+  color: #ffffff;
+  border: none;
+}
+
+output{
+  font-family: "Bungee", sans-serif;
+  float: right;
+}

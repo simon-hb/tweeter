@@ -30,6 +30,7 @@ body {
   width: 90%;
   align-items: center;
   justify-items: center;
-  /*center aligned with margin: auto. don't need to put color because bubbling */
+  background-color: #f4f1ec;
+  /*center aligned with margin: auto. don't need to put color because bubbling but did anyways*/
   margin: auto;
 }
