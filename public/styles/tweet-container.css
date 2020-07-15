@@ -22,9 +22,10 @@
   width: 40px;
   height: 40px;
   margin-top: 15px;
+  margin-right: 0.5em;
 }
 
-.tweet-element div{
+.tweet-element > div{
   display: flex;
   width: 90%;
 }
@@ -32,18 +33,20 @@
 .tweet-element footer{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 90%;
-  border-top: 4px black;
+  border-top: 4px solid black;
 }
 
 .tweet-element footer p{
   display:flex;
-  justify-items: flex-start;
+  justify-content: flex-start;
 }
 
 .tweet-element footer div{
   display:flex;
-  justify-items: flex-end;
+  justify-content: space-between;
+  width: 3.5em;
 }
 
 .tweet-element:hover{
