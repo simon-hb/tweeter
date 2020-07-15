@@ -24,13 +24,3 @@ body {
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
-
- main {
-  display: flex;
-  width: 90%;
-  align-items: center;
-  justify-items: center;
-  background-color: #f4f1ec;
-  /*center aligned with margin: auto. don't need to put color because bubbling but did anyways*/
-  margin: auto;
-}

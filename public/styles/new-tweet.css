@@ -1,4 +1,4 @@
-/* start with . since new-tweet is class name */
+/* start with . since new-tweet is class name. don't need dot for tags. I put .new-tweet in front of each tag because I am targetting specific areas and don't want to target all tags (ex: div) */
 .new-tweet{
   display:flex;
   flex-direction:column;
@@ -12,28 +12,24 @@
   text-align: center;
 }
 
-form {
+.new-tweet form {
   width: 100%
 }
 
-/* no . since this is name of tag */
-textarea {
-  border-left: none;
-  border-right: none;
-  border-top: none;
+.new-tweet textarea {
+  border: none;
   border-bottom: 4px solid black;
   width: 100%;
   background-color: #f4f1ec;
 }
 
-/* can put .new-tweet in front of each but not necessary for textarea since only one. there are multiple divs */
 .new-tweet div{
   display: flex;
   justify-content: space-between;
   font-family: "Bungee", sans-serif;
 }
 
-button {
+.new-tweet button {
   background-color: #4056a1;
   color: #ffffff;
   border: none;

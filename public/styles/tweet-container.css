@@ -1,0 +1,52 @@
+.tweet-element{
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  border: 4px solid black;
+  margin: 1em;
+}
+
+.tweet-element header{
+  display: flex;
+  justify-content: space-between;
+  width: 90%
+}
+
+.tweet-element header div{
+  display: flex;
+  justify-content: flex-start
+}
+
+.tweet-element header div img{
+  width: 40px;
+  height: 40px;
+  margin-top: 15px;
+}
+
+.tweet-element div{
+  display: flex;
+  width: 90%;
+}
+
+.tweet-element footer{
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  border-top: 4px black;
+}
+
+.tweet-element footer p{
+  display:flex;
+  justify-items: flex-start;
+}
+
+.tweet-element footer div{
+  display:flex;
+  justify-items: flex-end;
+}
+
+.tweet-element:hover{
+  box-shadow: 10px 10px 5px gray;
+  text-shadow: 0px 0px 1px black
+}
