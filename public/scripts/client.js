@@ -76,9 +76,11 @@ $(document).ready(function() {
     const serialized = $(this).serialize();
     //posts the data in /tweets. then logs tweet posted, loadTweets() again, empty textbox
     if ($('#tweet-text').val().length === 0) {
-      alert('Cannot post an empty tweet.')
+      $('#error').text("⚠️Cannot post an empty tweet.⚠️")
+      $("#error").slideDown(300);
     } else if ($('#tweet-text').val().length > 140){
-      alert('Tweets must be less than 140 characters.')
+      $('#error').text("⚠️Tweets must be less than 140 characters.⚠️")
+      $("#error").slideDown(300);
     } else {
       $.ajax({
         method: "POST",
@@ -87,6 +89,7 @@ $(document).ready(function() {
       }).then((response) => {
         console.log('Tweet posted')
         loadTweets();
+        $('#error').css('display', 'none')
         $('#tweet-text').val('')
       });
     }
