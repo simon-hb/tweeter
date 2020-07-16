@@ -5,34 +5,10 @@
  */
 
 // Fake data taken from initial-tweets.json
-const data = [
-  {
-    "user": {
-      "name": "Newton",
-      "avatars": "https://i.imgur.com/73hZDYK.png"
-      ,
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": "https://i.imgur.com/nlhLi3I.png",
-      "handle": "@rd" },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  }
-]
 
 const renderTweets = function(tweets) {
   // loops through tweets
-  for (eachTweet of tweets) {
+  for (eachTweet of tweets.reverse()) {
     // calls createTweetElement for each tweet
     let tempTweet = createTweetElement(eachTweet);
     //console.log(tempTweet) //testing if it showed up in console
@@ -70,26 +46,36 @@ let $singleTweet = /* Your code for creating the tweet element */
 return $singleTweet;
 }
 
+const loadTweets = function () {
+  //gets json from /tweets
+  $.ajax({
+    url:"/tweets",
+    method: "GET"
+  }).then((response) => {
+    //empty tweet container section since renderTweets appends all of the tweets in our array 
+    $('#tweet-container').empty();
+    renderTweets(response);
+  })
+};
+
 $(document).ready(function() {
-  renderTweets(data);
-})
-
-
-// Test / driver code (temporary). Eventually will get this from the server.
-// const tweetData = {
-//   "user": {
-//     "name": "Newton",
-//     "avatars": "https://i.imgur.com/73hZDYK.png",
-//       "handle": "@SirIsaac"
-//     },
-//   "content": {
-//       "text": "If I have seen further it is by standing on the shoulders of giants"
-//     },
-//   "created_at": 1461116232227
-// }
-
-// const $tweet = createTweetElement(tweetData);
-
-// // Test / driver code (temporary)
-// console.log($tweet); // to see what it looks like
-// $('#tweets-container').append($tweet); // to add it to the page so we can make sure it's got all the right 
+  //load all our tweets upon loading page
+  loadTweets();
+  //each time we submit form (click tweet)
+  $('form').submit(function(event) {
+    //cancels original functionality since we want to add our own
+    event.preventDefault();
+    //takes this (form) and turns it from json to jquery string (like a list)
+    const serialized = $(this).serialize();
+    //posts the data in /tweets. then logs tweet posted, loadTweets() again, empty textbox
+    $.ajax({
+      method: "POST",
+      url: "/tweets",
+      data: serialized
+    }).then((response) => {
+      console.log('Tweet posted')
+      loadTweets();
+      $('#tweet-text').val('')
+    });
+  }); 
+});
