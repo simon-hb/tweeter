@@ -6,6 +6,13 @@
 
 // Fake data taken from initial-tweets.json
 
+//functions to prevent users from using JS on page. this will convert it to text
+const escape =  function(str) {
+  let div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
 const renderTweets = function(tweets) {
   // loops through tweets
   for (eachTweet of tweets.reverse()) {
@@ -31,7 +38,7 @@ let $singleTweet = /* Your code for creating the tweet element */
       <p>${tweet.user.handle}</p>
     </header>
     <div>
-      <P>${tweet.content.text}</P>
+      <P>${escape(tweet.content.text)}</P>
     </div>
     <footer>
       <p>${createdDayDifference} days ago</p>
