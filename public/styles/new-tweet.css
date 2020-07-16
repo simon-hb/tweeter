@@ -1,5 +1,3 @@
-/* start with . since new-tweet is class name. don't need dot for tags. I put .new-tweet in front of each tag because I am targetting specific areas and don't want to target all tags (ex: div) */
-
 .new-tweet {
     display: none;
     flex-direction: column;
