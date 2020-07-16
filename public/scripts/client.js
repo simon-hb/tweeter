@@ -46,6 +46,7 @@ let $singleTweet = /* Your code for creating the tweet element */
 return $singleTweet;
 }
 
+//function runs when page loads (document ready)
 $(document).ready(function() {
   const loadTweets = function () {
     //gets json from /tweets
@@ -67,14 +68,20 @@ $(document).ready(function() {
     //takes this (form) and turns it from json to jquery string (like a list)
     const serialized = $(this).serialize();
     //posts the data in /tweets. then logs tweet posted, loadTweets() again, empty textbox
-    $.ajax({
-      method: "POST",
-      url: "/tweets",
-      data: serialized
-    }).then((response) => {
-      console.log('Tweet posted')
-      loadTweets();
-      $('#tweet-text').val('')
-    });
+    if ($('#tweet-text').val().length === 0) {
+      alert('Cannot post an empty tweet.')
+    } else if ($('#tweet-text').val().length > 140){
+      alert('Tweets must be less than 140 characters.')
+    } else {
+      $.ajax({
+        method: "POST",
+        url: "/tweets",
+        data: serialized
+      }).then((response) => {
+        console.log('Tweet posted')
+        loadTweets();
+        $('#tweet-text').val('')
+      });
+    }
   }); 
 });
