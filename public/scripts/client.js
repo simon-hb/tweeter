@@ -4,14 +4,12 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-// Fake data taken from initial-tweets.json
-
 //functions to prevent users from using JS on page. this will convert it to text
 const escape =  function(str) {
   let div = document.createElement('div');
   div.appendChild(document.createTextNode(str));
   return div.innerHTML;
-}
+};
 
 const renderTweets = function(tweets) {
   // loops through tweets
@@ -22,13 +20,14 @@ const renderTweets = function(tweets) {
     // takes return value and appends it to the tweets container
     $('#tweet-container').append(tempTweet);
   }
-}
+};
 
 const createTweetElement = function(tweet) {
-let createdMSDifference = Date.now() - tweet.created_at;
-let createdDayDifference = Math.ceil(createdMSDifference / (1000 * 60 * 60 * 24)); 
+  //timestamp is time in milliseconds from random date in the 70s. Date.now gives us current timestamp. If we subtract the 2 we get the difference in 2 times in ms which we can convert to days
+  let createdMSDifference = Date.now() - tweet.created_at;
+  let createdDayDifference = Math.ceil(createdMSDifference / (1000 * 60 * 60 * 24));
 
-let $singleTweet = /* Your code for creating the tweet element */
+  let $singleTweet = /* HTML code for each tweet aticle */
  `<article class="tweet-element">
     <header>
       <div>
@@ -38,7 +37,7 @@ let $singleTweet = /* Your code for creating the tweet element */
       <p>${tweet.user.handle}</p>
     </header>
     <div>
-      <P>${escape(tweet.content.text)}</P>
+      <p>${escape(tweet.content.text)}</p>
     </div>
     <footer>
       <p>${createdDayDifference} days ago</p>
@@ -48,23 +47,29 @@ let $singleTweet = /* Your code for creating the tweet element */
         <i class="fa fa-heart-o"></i>
       </div>
     </footer>
-  </article>`
+  </article>`;
 
-return $singleTweet;
-}
+  return $singleTweet;
+};
 
 //function runs when page loads (document ready)
 $(document).ready(function() {
-  const loadTweets = function () {
+
+  //when click Write a new Tweet, it will toggle our textbox
+  $("#composeNewTweet").click(function() {
+    $(".new-tweet").slideToggle("slow");
+  });
+
+  const loadTweets = function() {
     //gets json from /tweets
     $.ajax({
       url:"/tweets",
       method: "GET"
     }).then((response) => {
-      //empty tweet container section since renderTweets appends all of the tweets in our array 
+      //empty tweet container section since renderTweets appends all of the tweets in our array
       $('#tweet-container').empty();
       renderTweets(response);
-    })
+    });
   };
   //load all our tweets upon loading page
   loadTweets();
@@ -74,12 +79,12 @@ $(document).ready(function() {
     event.preventDefault();
     //takes this (form) and turns it from json to jquery string (like a list)
     const serialized = $(this).serialize();
-    //posts the data in /tweets. then logs tweet posted, loadTweets() again, empty textbox
+    //posts the data in /tweets. then logs tweet posted, loadTweets() again, empty textbox. else post error
     if ($('#tweet-text').val().length === 0) {
-      $('#error').text("⚠️Cannot post an empty tweet.⚠️")
+      $('#error').text("⚠️Cannot post an empty tweet.⚠️");
       $("#error").slideDown(300);
-    } else if ($('#tweet-text').val().length > 140){
-      $('#error').text("⚠️Tweets must be less than 140 characters.⚠️")
+    } else if ($('#tweet-text').val().length > 140) {
+      $('#error').text("⚠️Tweets must be less than 140 characters.⚠️");
       $("#error").slideDown(300);
     } else {
       $.ajax({
@@ -88,9 +93,9 @@ $(document).ready(function() {
         data: serialized
       }).then((response) => {
         loadTweets();
-        $('#error').css('display', 'none')
-        $('#tweet-text').val('')
+        $('#error').css('display', 'none');
+        $('#tweet-text').val('');
       });
     }
-  }); 
+  });
 });

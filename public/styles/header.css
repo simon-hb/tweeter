@@ -1,22 +1,26 @@
-.profile{
-  height: 400px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #becc00;
-  background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
-  margin-top: 120px;
+.profile {
+    height: 400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #becc00;
+    background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+    margin-top: 120px;
 }
 
 @media only screen and (max-width: 1023px) {
-  .profile{
-  margin: 0;
-  }
- }
+    .profile {
+        margin: 0;
+    }
+}
 
-/* @media only screen and (min-width: 1024px) {
+
+/* tried to keep profile/ header fixed for desktop version. let me know in feedback for advice to fix (below code did not work)
+ @media only screen and (min-width: 1024px) {
   .profile {
+    position: fixed;
+    left: 0;
   }
 } */
