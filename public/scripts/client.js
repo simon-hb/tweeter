@@ -46,19 +46,18 @@ let $singleTweet = /* Your code for creating the tweet element */
 return $singleTweet;
 }
 
-const loadTweets = function () {
-  //gets json from /tweets
-  $.ajax({
-    url:"/tweets",
-    method: "GET"
-  }).then((response) => {
-    //empty tweet container section since renderTweets appends all of the tweets in our array 
-    $('#tweet-container').empty();
-    renderTweets(response);
-  })
-};
-
 $(document).ready(function() {
+  const loadTweets = function () {
+    //gets json from /tweets
+    $.ajax({
+      url:"/tweets",
+      method: "GET"
+    }).then((response) => {
+      //empty tweet container section since renderTweets appends all of the tweets in our array 
+      $('#tweet-container').empty();
+      renderTweets(response);
+    })
+  };
   //load all our tweets upon loading page
   loadTweets();
   //each time we submit form (click tweet)
