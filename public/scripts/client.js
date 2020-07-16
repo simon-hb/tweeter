@@ -87,7 +87,6 @@ $(document).ready(function() {
         url: "/tweets",
         data: serialized
       }).then((response) => {
-        console.log('Tweet posted')
         loadTweets();
         $('#error').css('display', 'none')
         $('#tweet-text').val('')
