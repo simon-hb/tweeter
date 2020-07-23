@@ -11,16 +11,25 @@ const escape =  function(str) {
   return div.innerHTML;
 };
 
+//renders all tweets currently in server. used when loading page
 const renderTweets = function(tweets) {
   // loops through tweets
-  for (eachTweet of tweets.reverse()) {
+  for (eachTweet of tweets) {
     // calls createTweetElement for each tweet
     let tempTweet = createTweetElement(eachTweet);
     //console.log(tempTweet) //testing if it showed up in console
     // takes return value and appends it to the tweets container
-    $('#tweet-container').append(tempTweet);
+    $('#tweet-container').prepend(tempTweet);
   }
 };
+
+//renders lone tweet. used when submitting form.
+const renderTweet = function(tweet) {
+  let tempTweet = createTweetElement(tweet);
+    //console.log(tempTweet) //testing if it showed up in console
+    // takes return value and appends it to the tweets container
+    $('#tweet-container').prepend(tempTweet);
+}
 
 const createTweetElement = function(tweet) {
   //timestamp is time in milliseconds from random date in the 70s. Date.now gives us current timestamp. If we subtract the 2 we get the difference in 2 times in ms which we can convert to days
@@ -54,25 +63,19 @@ const createTweetElement = function(tweet) {
 
 //function runs when page loads (document ready)
 $(document).ready(function() {
-
   //when click Write a new Tweet, it will toggle our textbox
   $("#composeNewTweet").click(function() {
     $(".new-tweet").slideToggle("slow");
   });
 
-  const loadTweets = function() {
-    //gets json from /tweets
-    $.ajax({
-      url:"/tweets",
-      method: "GET"
-    }).then((response) => {
-      //empty tweet container section since renderTweets appends all of the tweets in our array
-      $('#tweet-container').empty();
-      renderTweets(response);
-    });
-  };
-  //load all our tweets upon loading page
-  loadTweets();
+  //load all our tweets upon loading page. could turn this into function and call it here but we only use it once so left it like this
+  $.ajax({
+    url:"/tweets",
+    method: "GET"
+  }).then((response) => {
+    renderTweets(response);
+  });
+
   //each time we submit form (click tweet)
   $('form').submit(function(event) {
     //cancels original functionality since we want to add our own
@@ -87,12 +90,20 @@ $(document).ready(function() {
       $('#error').text("⚠️Tweets must be less than 140 characters.⚠️");
       $("#error").slideDown(300);
     } else {
+      //posts data to /tweets using ajax and serialized data (from above). could turn this into function and call it here but we only use it once so left it like this
       $.ajax({
         method: "POST",
         url: "/tweets",
         data: serialized
       }).then((response) => {
-        loadTweets();
+        //after posting we make another ajax get request to retrieve what we posted. 
+        $.ajax({
+          url:"/tweets",
+          method: "GET"
+        }).then((response) => {
+          //get the latest tweet then render it. response is an array of jquery string (as seen i n /tweets) which is why we retrieve the last one using [response.length-1]
+          renderTweet(response[response.length-1])
+        });
         $('#error').css('display', 'none');
         $('#tweet-text').val('');
       });
